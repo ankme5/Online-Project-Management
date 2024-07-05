@@ -1,0 +1,71 @@
+.form-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 10px;
+}
+
+.card {
+    border-radius: 8px;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+
+}
+
+.status span {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    padding: 0 10px;
+}
+
+.col-md-6 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-6 .form-group {
+    flex: 0 0 33.33%; /* Each form-group will take one-third of the column */
+    max-width: 33.33%;
+}
+
+@media (max-width: 768px) {
+    .col-md-6 .form-group {
+        flex: 0 0 50%; /* Adjust to 50% for smaller screens */
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 480px) {
+    .col-md-6 .form-group {
+        flex: 0 0 100%; /* Full width on extra small screens */
+        max-width: 100%;
+    }
+
+    .form-container {
+        padding: 10px; /* Adjust padding for small screens */
+    }
+}
+
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 1.2rem;
+    background-color: #644af7;
+}

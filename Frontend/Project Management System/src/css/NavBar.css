@@ -1,0 +1,110 @@
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    position: fixed;
+}
+
+.navbar .menu-icon {
+    display: none;
+    font-size: 24px;
+    color: whitesmoke;
+    cursor: pointer;
+    padding: 14px 16px;
+}
+
+.burger {
+    width: 25px;
+    height: 20px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.burger span {
+    height: 3px;
+    width: 100%;
+    background: whitesmoke;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.burger.open span:nth-child(1) {
+    transform: rotate(45deg);
+    position: absolute;
+    top: 8px;
+}
+
+.burger.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.burger.open span:nth-child(3) {
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 8px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar ul.nav-links {
+    transition: max-height 0.3s ease-out;
+}
+
+.navbar ul.nav-links.open {
+    max-height: 500px; /* Large enough to show all links */
+}
+
+.navbar ul li {
+    display: inline;
+}
+
+.navbar ul li a {
+    display: block;
+    color: whitesmoke;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: large;
+    margin: 5px; /* Add margin to create space between links */
+}
+
+.navbar ul li a:hover {
+    background-color: #111;
+}
+
+.navbar ul li a.active {
+    background-color: #644af7; /* Example active link color */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .navbar .menu-icon {
+        display: block;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+    }
+
+    .navbar ul li {
+        display: block;
+    }
+
+    .navbar ul li a {
+        margin: 0; /* Remove margin for smaller screens */
+    }
+
+    .navbar ul.nav-links.open {
+        max-height: 500px; /* Large enough to show all links */
+    }
+}

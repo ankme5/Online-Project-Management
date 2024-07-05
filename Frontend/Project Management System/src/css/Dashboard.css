@@ -1,0 +1,69 @@
+.summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    /* padding: 15px; */
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(230, 224, 224, 0.1);
+}
+
+.summary div {
+    flex: 1 1 calc(20% - 40px);
+    background-color: whitesmoke;
+    margin: 10px;
+    border-radius: 10px;
+    min-width: 150px;
+    color: black;
+    padding: 20px;
+    border-right: 6px solid rgb(31, 222, 159);
+    text-align: center;
+}
+
+.summary-text {
+    font-family: 'Roboto Slab';
+    font-size: medium;
+}
+
+.summary-number {
+    font-family: 'Roboto Slab';
+    font-size: xxx-large;
+}
+
+.chart-container {
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title {
+    text-align: center;
+    font-family: 'Roboto Slab';
+    font-size: large;
+    margin-bottom: 20px;
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 1200px) {
+    .summary div {
+        flex: 1 1 calc(33.33% - 40px); /* 3 items per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .summary div {
+        flex: 1 1 calc(50% - 40px); /* 2 items per row on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .summary div {
+        flex: 1 1 calc(100% - 40px); /* 1 item per row on extra small screens */
+    }
+}

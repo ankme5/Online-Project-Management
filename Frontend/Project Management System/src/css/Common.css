@@ -1,0 +1,26 @@
+.page-title {
+    font-size: x-large;
+    color: whitesmoke;
+    margin-top: 20px;
+    padding: 20px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px; /* Adjust padding to fit fixed navbar */
+    background: url('../assets/Header-bg.svg') no-repeat fixed;
+    background-size: cover; /* Cover the whole background */
+    min-height: 100vh; /* Ensure main covers the viewport height */
+}
+
+body {
+    font-family: "Roboto Slab";
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
