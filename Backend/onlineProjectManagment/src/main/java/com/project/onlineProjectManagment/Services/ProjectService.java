@@ -1,6 +1,6 @@
 package com.project.onlineProjectManagment.Services;
 
-import com.project.onlineProjectManagment.Entity.Count;
+import com.project.onlineProjectManagment.Entity.ChartEntity;
 import com.project.onlineProjectManagment.Entity.Project;
 import com.project.onlineProjectManagment.repositories.ProjectRepo;
 import org.slf4j.Logger;
@@ -38,5 +38,17 @@ public class ProjectService {
         statusCode.put("Total",statusCode.values().stream().mapToInt(Integer::intValue).sum());
         return statusCode;
 
+    }
+
+    public List<ChartEntity> getDeptWiseTotalCount(){
+        log.info("Department wise fetch");
+        return projectRepo.fetchDeptWiseCount().stream().map(
+                result -> new ChartEntity(
+                        result[0].toString(),
+                        ((Number) result[1]).longValue(),
+                        ((Number) result[2]).longValue()
+                )
+
+        ).collect(Collectors.toList());
     }
 }

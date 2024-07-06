@@ -1,6 +1,7 @@
 package com.project.onlineProjectManagment.Controllers;
 
 import com.project.onlineProjectManagment.Entity.ApiResponse;
+import com.project.onlineProjectManagment.Entity.ChartEntity;
 import com.project.onlineProjectManagment.Entity.Project;
 import com.project.onlineProjectManagment.ResponseStatus;
 import com.project.onlineProjectManagment.Services.ProjectService;
@@ -45,5 +46,9 @@ public class HomeController {
         return projectService.getStatusCount();
     }
 
+    @GetMapping("/dept-totalCount")
+    public List<ChartEntity> DepartWiseFatch(){
+        return projectService.getDeptWiseTotalCount();
+    }
 
 }
