@@ -6,11 +6,12 @@ import ProtectedRoute from './components/ProtectedRoute';
 import CreateProject from './components/CreateProject';
 import Display from './components/Display';
 import Dashboard from './components/Dashboard';
+import SideBar from './components/SideBar';
 
 const App: React.FC = () => {
     return (
         <>
-
+         
             <AuthProvider>
                 <Routes>
                     <Route path="*" element={<Login />} />

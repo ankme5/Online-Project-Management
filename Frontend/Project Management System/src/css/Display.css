@@ -9,34 +9,7 @@
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-.styled-table {
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 0.9em;
-    font-family: 'Roboto', sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
-
-.table-header {
-    background-color: #009879;
-    color: #ffffff;
-    text-align: left;
-}
-
-.table-row {
-    border-bottom: 1px solid #dddddd;
-    transition: background-color 0.3s ease;
-}
-
-.table-row:hover {
-    background-color: #f1f1f1;
-}
-
-.action-button {
-    margin: 0 5px;
+    max-width: 1400px;
 }
 
 .project-card {
@@ -48,6 +21,31 @@
     justify-content: space-between;
     margin-top: 1rem;
 }
+.search-filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    width: 10rem
+}
+
+.sort-select {
+    width: 10rem;
+}
+
+.project-table-container{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.table-fixed-height {
+    height: calc(100vh - 300px); /* Adjust height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
 
 @media (max-width: 600px) {
     .project-card {
@@ -59,4 +57,34 @@
         justify-content: space-between;
         margin-top: 1rem;
     }
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Hide any potential overflow */
+}
+
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.pagination-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.pagination-container {
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* Adjust alignment for pagination arrows */
+.MuiTablePagination-root .MuiTablePagination-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MuiTablePagination-root .MuiTablePagination-spacer {
+    display: none; /* Remove extra space */
 }

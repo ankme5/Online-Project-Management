@@ -1,106 +1,220 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/CreateProject.css';
-import '../css/Common.css'
-import 'react-datepicker/dist/react-datepicker.css';
-import NavBar from './NavBar';
+import '../css/Common.css';
+import SideBar from './SideBar';
 
 const CreateProject: React.FC = () => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const [projectData, setProjectData] = useState({
+        project_name: '',
+        reason: '',
+        type: '',
+        division: '',
+        category: '',
+        priority: '',
+        department: '',
+        start_date: currentDate,
+        end_date: '',
+        location: '',
+        status: 'Registered'
+    });
 
-    const [endDate, setEndDate] = useState<Date | null>(null);
+    const accessToken = "Bearer " + localStorage.getItem('authToken');
 
-    const handleEndDateChange = (date: Date | null) => {
-        if (date && date >= new Date()) {
-            setEndDate(date);
-        } else {
-            alert("End date cannot be earlier than today.");
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch('http://localhost:8080/home/add-project', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': accessToken
+                },
+                body: JSON.stringify(projectData)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.status.toUpperCase() === "SUCCESS") {
+                    alert("Project added successfully!");
+                } else {
+                    console.log('Unsuccessful:', data.message);
+                }
+            } else {
+                const errorData = await response.json();
+                console.log('Unsuccessful:', errorData.message);
+            }
+        } catch (error) {
+            console.error('Error in Creating Project:', error);
         }
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { id, value } = e.target;
+        setProjectData({ ...projectData, [id]: value });
+    };
+
     return (
-        <>
-            <NavBar />
-            <div className="main">
-                <span className='page-title'>Create Project</span>
+    
+<div className="d-flex">
+            <div className="col-auto">
+                <SideBar />
+            </div>
+            <div className="main flex-grow-1">
+            <div className="brand d-flex justify-content-between align-items-center">
+                    <div className="col-sm-4 title-div">
+                        <span className="page-title">Create Project</span>
+                    </div>
+                    <div className="col-sm-4 logo-div">
+                        <img src="src/assets/Logo.svg" alt="Logo" />
+                    </div>
+                    <div className="col-sm-4">
+
+                    </div>
+                </div>
                 <div className="form-container">
                     <div className='card shadow p-5'>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="status">
-                                <span>Status : </span>
+                                <span>Status: </span>
                                 <span id="status">Registered</span>
                             </div>
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="themeName">Project Theme Name</label>
-                                    <input type="text" className="form-control" id="themeName" placeholder="Enter theme name" />
+                                    <label htmlFor="project_name">Project Name</label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        id="project_name"
+                                        placeholder="Enter Project Theme"
+                                        value={projectData.project_name}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
                                 </div>
-
-                                <div className="form-group col-md-4">
+                                <div className="form-group col-md-6">
                                     <label htmlFor="division">Division</label>
-                                    <select id="reason" className="form-control">
-                                        <option>Choose...</option>
-                                        <option>Division 1</option>
-                                        <option>Division 2</option>
+                                    <select
+                                        id="division"
+                                        className="form-control"
+                                        value={projectData.division}
+                                        onChange={handleInputChange}
+                                        required
+                                    >
+                                        <option value="">Choose...</option>
+                                        <option value="Compressior">Division 1</option>
+                                        <option value="">Division 2</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div className="form-row">
                                 <div className='col-md-6'>
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group">
                                         <label htmlFor="reason">Reason</label>
-                                        <select id="reason" className="form-control">
-                                            <option>Choose...</option>
-                                            <option>Reason 1</option>
-                                            <option>Reason 2</option>
+                                        <select
+                                            id="reason"
+                                            className="form-control"
+                                            value={projectData.reason}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option value="Business">Business</option>
+                                            <option value="Dealership">Dealership</option>
+                                            <option value="Transport">Transport</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group">
                                         <label htmlFor="type">Type</label>
-                                        <select id="type" className="form-control">
-                                            <option>Choose...</option>
-                                            <option>Type 1</option>
-                                            <option>Type 2</option>
+                                        <select
+                                            id="type"
+                                            className="form-control"
+                                            value={projectData.type}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option value="Internal">Internal</option>
+                                            <option value="External">External</option>
+                                            <option value="Vendor">Vendor</option>
                                         </select>
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group">
                                         <label htmlFor="category">Category</label>
-                                        <select id="category" className="form-control">
-                                            <option>Choose...</option>
-                                            <option>Category 1</option>
-                                            <option>Category 2</option>
+                                        <select
+                                            id="category"
+                                            className="form-control"
+                                            value={projectData.category}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option value="Quality A">Quality A</option>
+                                            <option value="Quality B">Quality B</option>
+                                            <option value="Quality C">Quality C</option>
+                                            <option value="Quality D">Quality D</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div className="col-md-6">
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group">
                                         <label htmlFor="priority">Priority</label>
-                                        <select id="priority" className="form-control">
-                                            <option>Choose...</option>
-                                            <option>High</option>
-                                            <option>Medium</option>
-                                            <option>Low</option>
+                                        <select
+                                            id="priority"
+                                            className="form-control"
+                                            value={projectData.priority}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
                                         </select>
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group">
                                         <label htmlFor="department">Department</label>
-                                        <select id="department" className="form-control">
-                                            <option>Choose...</option>
-                                            <option>Department 1</option>
-                                            <option>Department 2</option>
+                                        <select
+                                            id="department"
+                                            className="form-control"
+                                            value={projectData.department}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option value="HR">HR</option>
+                                            <option value="Finance">Finance</option>
+                                            <option value="Strategy">Strategy</option>
+                                            <option value="Quality">Quality</option>
+                                            <option value="Sales">Sales</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Legal">Legal</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
 
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group">
                                         <label htmlFor="location">Location</label>
-                                        <select id="location" className="form-control">
-                                            <option>Choose...</option>
-                                            <option>Location 1</option>
-                                            <option>Location 2</option>
+                                        <select
+                                            id="location"
+                                            className="form-control"
+                                            value={projectData.location}
+                                            onChange={handleInputChange}
+                                            required
+                                        >
+                                            <option value="">Choose...</option>
+                                            <option value="Pune">Pune</option>
+                                            <option value="Mumbai">Mumbai</option>
+                                            <option value="Bangalore">Bangalore</option>
+                                            <option value="Other">Other</option>
                                         </select>
                                     </div>
                                 </div>
@@ -108,16 +222,26 @@ const CreateProject: React.FC = () => {
 
                             <div className="form-row">
                                 <div className="form-group col-md-6">
-                                    <label htmlFor="startDate">Start Date</label>
-                                    <input type="date" className="form-control" id="startDate" />
-                                </div>
-
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="endDate">End Date</label>
+                                    <label htmlFor="start_date">Start Date</label>
                                     <input
                                         type="date"
                                         className="form-control"
-                                        id="endDate"
+                                        id="start_date"
+                                        value={projectData.start_date}
+                                        onChange={handleInputChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group col-md-6">
+                                    <label htmlFor="end_date">End Date</label>
+                                    <input
+                                        type="date"
+                                        className="form-control"
+                                        id="end_date"
+                                        value={projectData.end_date}
+                                        onChange={handleInputChange}
+                                        required
                                     />
                                 </div>
                             </div>
@@ -129,8 +253,8 @@ const CreateProject: React.FC = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
-}
+};
 
 export default CreateProject;

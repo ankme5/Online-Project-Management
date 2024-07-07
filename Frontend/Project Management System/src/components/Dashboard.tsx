@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Chart from 'chart.js/auto';
 import '../css/Dashboard.css';
 import '../css/Common.css';
-import Chart from 'chart.js/auto';
-import NavBar from './NavBar';
+import SideBar from './SideBar'
 
 const Dashboard: React.FC = () => {
     const [totalProjects, setTotalProjects] = useState(0);
@@ -11,9 +11,9 @@ const Dashboard: React.FC = () => {
     const [closureDelayProjects, setClosureDelayProjects] = useState(0);
     const [cancelledProjects, setCancelledProjects] = useState(0);
 
-    const departments = ['STR', 'FIN', 'QLT', 'MAN', 'STO', 'HR'];
-    const totalCases = [15, 20, 10];  // These should be updated with the API response
-    const closedCases = [5, 10, 8];   // These should be updated with the API response
+    const [departments, setDepartments] = useState<string[]>([]);
+    const [totalCases, setTotalCases] = useState<number[]>([]);
+    const [closedCases, setClosedCases] = useState<number[]>([]);
 
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const chartInstance = useRef<Chart | null>(null);
@@ -21,10 +21,9 @@ const Dashboard: React.FC = () => {
     const accessToken = "Bearer " + localStorage.getItem('authToken');
 
     useEffect(() => {
-        // API Call to fetch data
-        const fetchData = async () => {
+        const fetchAllData = async () => {
             try {
-                console.log("calling all-counts");
+                console.log("calling all-counts API");
                 const response = await fetch("http://localhost:8080/home/all-counts", {
                     method: 'GET',
                     headers: {
@@ -39,116 +38,168 @@ const Dashboard: React.FC = () => {
 
                 const data = await response.json();
 
-                // Update state variables with the fetched data
                 setTotalProjects(data.Total || 0);
                 setClosedProjects(data.Closed || 0);
                 setRunningProjects(data.Running || 0);
-                setClosureDelayProjects(data.Registered || 0);
-                setCancelledProjects(data.Cancel || 0);
-
-                // Update chart data
-                // Assuming you get data like { department: 'STR', total: 15, closed: 5 } from the API
-                // Update totalCases and closedCases accordingly here
-                // For now, using the static data as example
-                // const updatedTotalCases = data.map(d => d.total);
-                // const updatedClosedCases = data.map(d => d.closed);
-                // setTotalCases(updatedTotalCases);
-                // setClosedCases(updatedClosedCases);
+                setClosureDelayProjects(data.Running || 0);
+                setCancelledProjects(data.Cancelled || 0);
 
             } catch (error) {
                 console.log("getting error while fetching all data " + error);
             }
         };
-        fetchData();
 
-        // Chart mapping
-        if (chartRef.current) {
-            if (chartInstance.current) {
-                chartInstance.current.destroy();
-            }
-
-            const ctx = chartRef.current.getContext('2d');
-            if (ctx) {
-                chartInstance.current = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: departments,
-                        datasets: [
-                            {
-                                label: 'Total',
-                                data: totalCases,
-                                backgroundColor: 'rgba(60, 179, 113, 1)',
-                                borderColor: 'rgba(60, 179, 113, 1)',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Closed',
-                                data: closedCases,
-                                backgroundColor: 'rgba(106, 90, 205, 1)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }
-                        ]
+        const fetchDeptWiseCount = async () => {
+            try {
+                console.log("calling Dept Wise Count API");
+                const response = await fetch("http://localhost:8080/home/dept-totalCount", {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': accessToken
                     },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 5
-                                }
-                            }
-                        }
-                    }
                 });
-            }
-        }
 
-        // Cleanup function
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+
+                const data = await response.json();
+
+                const updatedDepartments = data.map((item: { department: string }) => item.department);
+                const updatedTotalCases = data.map((item: { total: number }) => item.total);
+                const updatedClosedCases = data.map((item: { closed: number }) => item.closed);
+
+                setDepartments(updatedDepartments);
+                setTotalCases(updatedTotalCases);
+                setClosedCases(updatedClosedCases);
+
+            } catch (error) {
+                console.log("getting error while fetching Department Wise data " + error);
+            }
+        };
+
+        // Call API functions
+        fetchAllData();
+        fetchDeptWiseCount();
+
+        // Cleanup function for chart instance
         return () => {
             if (chartInstance.current) {
                 chartInstance.current.destroy();
             }
         };
-    }, [accessToken, departments, totalCases, closedCases]);
+    }, [accessToken]);
+
+    useEffect(() => {
+        // Function to initialize chart
+        const updateChart = () => {
+            if (chartRef.current && departments.length > 0) {
+                if (chartInstance.current) {
+                    chartInstance.current.destroy();
+                }
+
+                const ctx = chartRef.current.getContext('2d');
+                if (ctx) {
+                    chartInstance.current = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: departments,
+                            datasets: [
+                                {
+                                    label: 'Total',
+                                    data: totalCases,
+                                    backgroundColor: 'rgba(60, 179, 113, 1)',
+                                    borderColor: 'rgba(60, 179, 113, 1)',
+                                    borderWidth: 1
+                                },
+                                {
+                                    label: 'Closed',
+                                    data: closedCases,
+                                    backgroundColor: 'rgba(106, 90, 205, 1)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        stepSize: 2
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        // Call chart update function
+        updateChart();
+
+        // Cleanup function for chart instance
+        return () => {
+            if (chartInstance.current) {
+                chartInstance.current.destroy();
+            }
+        };
+    }, [departments, totalCases, closedCases]); // Depend on variables needed for chart rendering
 
     return (
         <>
-            <NavBar />
-            <div className='main'>
-                <span className="page-title">Dashboard</span>
-                <div className="container">
-                    <div className="summary">
-                        <div>
-                            <p className="summary-text">Total Projects</p>
-                            <p className="summary-number">{totalProjects}</p>
+            <div className="d-flex">
+                <div className="col-auto">
+                    <SideBar />
+                </div>
+                <div className="main flex-grow-1">
+                    <div className="brand d-flex justify-content-between align-items-center">
+                        <div className="col-sm-4 title-div">
+                            <span className="page-title">Dashboard</span>
                         </div>
-                        <div>
-                            <p className="summary-text">Closed</p>
-                            <p className="summary-number">{closedProjects}</p>
+                        <div className="col-sm-4 logo-div d-none d-lg-block">
+                            <img src="src/assets/Logo.svg" alt="Logo" />
                         </div>
-                        <div>
-                            <p className="summary-text">Running</p>
-                            <p className="summary-number">{runningProjects}</p>
-                        </div>
-                        <div>
-                            <p className="summary-text">Closure Delay</p>
-                            <p className="summary-number">{closureDelayProjects}</p>
-                        </div>
-                        <div>
-                            <p className="summary-text">Cancelled</p>
-                            <p className="summary-number">{cancelledProjects}</p>
+                        <div className="col-sm-4 d-none d-lg-flex justify-content-end">
                         </div>
                     </div>
-                    <div className="chart-container">
-                        <p className="chart-title">Department Wise Total Vs Closed</p>
-                        <canvas ref={chartRef} />
+                    <div className="container">
+                        <div className="summary d-flex justify-content-between flex-wrap">
+                            <div>
+                                <p className="summary-text">Total Projects</p>
+                                <p className="summary-number">{totalProjects}</p>
+                            </div>
+                            <div>
+                                <p className="summary-text">Closed</p>
+                                <p className="summary-number">{closedProjects}</p>
+                            </div>
+                            <div>
+                                <p className="summary-text">Running</p>
+                                <p className="summary-number">{runningProjects}</p>
+                            </div>
+                            <div>
+                                <p className="summary-text">Closure Delay</p>
+                                <p className="summary-number">{closureDelayProjects}</p>
+                            </div>
+                            <div>
+                                <p className="summary-text">Cancelled</p>
+                                <p className="summary-number">{cancelledProjects}</p>
+                            </div>
+                        </div>
+                        <div className="chart-container mt-4">
+                            <p className="chart-title">Department Wise Total Vs Closed</p>
+                            <canvas ref={chartRef} />
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         </>
     );
-}
+};
 
 export default Dashboard;

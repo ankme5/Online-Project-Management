@@ -51,4 +51,9 @@ public class HomeController {
         return projectService.getDeptWiseTotalCount();
     }
 
+    @PutMapping("/update-status/{id}/{status}")
+    public void updateStatus(@PathVariable String status, @PathVariable String id){
+
+        projectService.updateStatusbyID(status, Integer.parseInt(id));
+    }
 }

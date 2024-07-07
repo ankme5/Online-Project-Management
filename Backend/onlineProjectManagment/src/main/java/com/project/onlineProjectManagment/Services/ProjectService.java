@@ -51,4 +51,11 @@ public class ProjectService {
 
         ).collect(Collectors.toList());
     }
+
+    public void updateStatusbyID(String status,int proj_id){
+        int count=projectRepo.updateStatuByID(status,proj_id);
+            log.info("Update Status Successfully with count : "+count);
+
+
+    }
 }

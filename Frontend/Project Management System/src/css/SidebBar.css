@@ -1,0 +1,50 @@
+.sidebar .nav{
+    padding: 0px !important;
+    flex-direction: column;
+}
+
+.sidebar{
+    height: 100%;
+    justify-content: space-between;
+    background-color: rgb(243, 243, 243);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.signout-container {
+    margin-top: auto; /* Pushes signout container to bottom */
+}
+
+.link-container .nav .nav-item {
+   
+}
+.link-container{    
+    flex-grow: 1;
+    margin-top: 16rem;
+
+}
+
+@media (max-width: 426px) {
+    .sidebar {
+       background-color: brown;
+    }
+    .sidebar .nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        
+    }
+    .link-container {
+        order: 1 !important; /* Moves link container to bottom */
+        width: 10pc; /* Takes full width on smaller screens */
+    }
+
+    .signout-container {
+        order: 2 !important; /* Moves signout container to top */
+        width: 100%; /* Takes full width on smaller screens */
+       
+    }
+
+
+}

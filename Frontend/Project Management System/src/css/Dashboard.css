@@ -1,13 +1,14 @@
+.dashboard-container{
+    display: flex;
+    flex-direction: column;
+}
+
 .summary {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     width: 100%;
-    /* padding: 15px; */
-    /* background-color: rgba(255, 255, 255, 0.8); */
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(230, 224, 224, 0.1);
 }
 
 .summary div {
@@ -20,33 +21,44 @@
     padding: 20px;
     border-right: 6px solid rgb(31, 222, 159);
     text-align: center;
+    transition: transform 0.3s;
+}
+
+.summary div:hover {
+    transform: translateY(-5px);
 }
 
 .summary-text {
-    font-family: 'Roboto Slab';
     font-size: medium;
 }
 
 .summary-number {
-    font-family: 'Roboto Slab';
     font-size: xxx-large;
 }
 
 .chart-container {
     margin: 20px 0;
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.chart-container canvas {
+    width: 100%; 
+    max-width: 100%;
+    height: auto; 
+}
+
 .chart-title {
     text-align: center;
-    font-family: 'Roboto Slab';
     font-size: large;
     margin-bottom: 20px;
+}
+
+.sidebar-container{
 }
 
 /* Media Queries for responsiveness */
@@ -60,10 +72,61 @@
     .summary div {
         flex: 1 1 calc(50% - 40px); /* 2 items per row on small screens */
     }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .chart-title {
+        font-size: medium;
+    }
 }
 
 @media (max-width: 480px) {
+    .d-flex {
+        flex-direction: column;
+    }
+
+    .sidebar-container {
+        width: 100%;
+        order: 2;
+    }
+
+    .signout-container {
+        order: 1;
+        justify-content: flex-end;
+        display: flex;
+    }
+
+    .brand {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0;
+    }
+
+    .brand img {
+        display: none;
+    }
+
     .summary div {
         flex: 1 1 calc(100% - 40px); /* 1 item per row on extra small screens */
+    }
+
+    .page-title {
+        font-size: 1rem;
+    }
+
+    .summary-number {
+        font-size: xx-large;
+    }
+
+    .chart-title {
+        font-size: medium;
+    }
+
+    .brand {
+        display: flex;
+        padding-top: 10px;
+        justify-content: space-between;
     }
 }

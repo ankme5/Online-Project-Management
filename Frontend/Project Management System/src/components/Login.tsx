@@ -29,7 +29,6 @@ const Login: React.FC = () => {
         },
         body: JSON.stringify(credentials),
       });
-
       const data = await response.json();
       if (response.ok) {
         login(data.token); // Call login to set token and state, and navigate to dashboard
@@ -43,86 +42,64 @@ const Login: React.FC = () => {
   };
 
   return (
+    <div className='login-main'>
     <div className="container-fluid">
       <div className="container">
+        <div className='row login-header'>
+          <span><img src="src/assets/Logo.svg" alt="Logo" /></span>
+          <p>Online Project Management</p>
+        </div>
         <div className="row">
           <div className="col-lg-10 col-md-12 login-box">
-            <div className="row">
-              <div className="log-det col-lg-6 col-md-6">
-                <span className="small-logo">Welcome Back</span>
-                <p className="sub-text">Online Project Management</p>
-                <div className="text-box-cont">
-                  <form onSubmit={handleSubmit}>
-                    <div className="input-group mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon1">
-                          <FontAwesomeIcon icon={faUser} />
-                        </span>
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Username"
-                        aria-label="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="input-group mb-3">
-                      <div className="input-group-prepend">
-                        <span className="input-group-text" id="basic-addon1">
-                          <FontAwesomeIcon icon={faLock} />
-                        </span>
-                      </div>
-                      <input
-                        type="password"
-                        className="form-control"
-                        placeholder="Password"
-                        aria-label="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                      />
-                    </div>
-                    <div className="input-group center">
-                      <button type="submit" className="btn btn-round btn-primary">
-                        SIGN IN
-                      </button>
-                    </div>
-                    <div className="row">
-                      <p className="forget-p">
-                        Don't have an account?{' '}
-                        <span>
-                          <a href="">Sign Up Now</a>
-                        </span>
-                      </p>
-                    </div>
-                    <div className="row">
-                      <p className="small-info">Connect With Social Media</p>
-                    </div>
-                  </form>
-                </div>
-                <div className="row">
-                  <ul>
-                    <li>
-                      <FontAwesomeIcon icon={faFacebookF} />
-                    </li>
-                    <li>
-                      <FontAwesomeIcon icon={faTwitter} />
-                    </li>
-                    <li>
-                      <FontAwesomeIcon icon={faLinkedin} />
-                    </li>
-                  </ul>
-                </div>
+            <div className="log-det">
+              <p className="sub-text">Login to Get Started</p>
+              <div className="text-box-cont">
+                <form onSubmit={handleSubmit}>
+                  <div className="input-group mb-3">
+                    <p>Email</p>
+                    <input
+                      type="text"
+                      id="username"
+                      className="form-control"
+                      placeholder="Enter your email"
+                      aria-label="Email"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="input-group">
+                    <p>Password</p>
+                    <input
+                      type="password"
+                      id="password"
+                      className="form-control"
+                      placeholder="Enter your password"
+                      aria-label="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="row">
+                    <p className="forget-p">
+                      <a href="">Forgot Password?</a>
+                    </p>
+                  </div>
+                  <div className="input-group center">
+                    <button type="submit" className="btn btn-round btn-primary">
+                      SIGN IN
+                    </button>
+                  </div>
+                </form>
               </div>
-              <div className="col-lg-6 col-md-6 box-de"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  
   );
 };
 
