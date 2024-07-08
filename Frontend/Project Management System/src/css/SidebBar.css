@@ -1,9 +1,9 @@
-.sidebar .nav{
+.sidebar .nav {
     padding: 0px !important;
     flex-direction: column;
 }
 
-.sidebar{
+.sidebar {
     height: 100%;
     justify-content: space-between;
     background-color: rgb(243, 243, 243);
@@ -13,13 +13,13 @@
 }
 
 .signout-container {
-    margin-top: auto; /* Pushes signout container to bottom */
+    margin-top: auto;
+    /* Pushes signout container to bottom */
 }
 
-.link-container .nav .nav-item {
-   
-}
-.link-container{    
+.link-container .nav .nav-item {}
+
+.link-container {
     flex-grow: 1;
     margin-top: 16rem;
 
@@ -27,23 +27,53 @@
 
 @media (max-width: 426px) {
     .sidebar {
-       background-color: brown;
+        background-color: rgb(233, 233, 233);
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
     }
+
+    .sidebar-container {
+        width: 100%;
+        flex-grow: 1;
+    }
+
     .sidebar .nav {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-around;
-        
+        width: 100%;
     }
+
     .link-container {
-        order: 1 !important; /* Moves link container to bottom */
-        width: 10pc; /* Takes full width on smaller screens */
+        width: 100%;
+        margin-top: 0;
+        position: fixed;
+
     }
 
     .signout-container {
-        order: 2 !important; /* Moves signout container to top */
-        width: 100%; /* Takes full width on smaller screens */
-       
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+        display: none;
+    }
+
+    .nav-item {
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu-logo img {
+        width: 100%;
+        max-width: 40px;
     }
 
 

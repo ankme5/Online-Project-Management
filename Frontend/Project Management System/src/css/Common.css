@@ -3,33 +3,55 @@
     color: whitesmoke;
     margin-top: 5px;
     text-align: left;
-    font-weight:500;
-    
+    font-weight: 500;
+
 }
+
 .brand {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 30px 30px;
+    width: 100%;
 
 }
+
 .brand img {
-    height: 60px; 
+    height: 60px;
     width: auto;
     flex: 1;
-    margin-right: 10rem;
 }
 
 .brand .logo-div {
     text-align: center;
 }
 
+.brand .brand-logout {
+    padding-right: 1rem;
+}
+
+.brand .brand-logout img {
+    width: 100%;
+    max-width: 25px;
+
+}
+
+
+.brand .brand-logout a span {
+    margin: 0px !important;
+    right: 0px;
+    padding: 0px;
+    display: none;
+}
+
 .main {
     align-items: center;
     background: url('../assets/Header-bg.svg') no-repeat;
-    background-size: contain; /* Cover the whole background */
-    height: 100vh; 
-    
+    background-size: contain;
+    /* Cover the whole background */
+    height: 100dvh;
+    flex-grow: 1;
+
 }
 
 body {
@@ -38,7 +60,48 @@ body {
 }
 
 .container {
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 100%;
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; */
+    padding-top: 10px;
+    margin-bottom: 30px;
+
+}
+
+@media screen and (max-width:480px) {
+
+    .main {
+        max-height: calc(100vh - 60px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .brand {
+        padding: 0px;
+        align-items: center;
+    }
+
+    .brand .logo-div img {
+        padding-right: 5px;
+        display: none;
+    }
+
+
+    .brand .brand-logout a span {
+        display: block;
+    }
+
+    .container {
+        padding-top: 30px;
+        overflow-y: auto;
+    }
+
+    .title-div .page-title {
+        font-size: 1rem;
+        padding-left: 1rem;
+    }
 
 }

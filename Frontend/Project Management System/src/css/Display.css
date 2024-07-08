@@ -1,13 +1,5 @@
-.list-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
 .card {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
     max-width: 1400px;
 }
@@ -21,6 +13,7 @@
     justify-content: space-between;
     margin-top: 1rem;
 }
+
 .search-filter-section {
     display: flex;
     justify-content: space-between;
@@ -36,34 +29,26 @@
     width: 10rem;
 }
 
-.project-table-container{
-    max-width: 1400px;
+.project-table-container {
+    min-width: 100%;
     margin: 0 auto;
 }
 
 .table-fixed-height {
-    height: calc(100vh - 300px); /* Adjust height as needed */
-    overflow-y: auto; /* Enable vertical scrolling */
+    height: calc(100vh - 300px);
+    /* Adjust height as needed */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
 }
 
 
-@media (max-width: 600px) {
-    .project-card {
-        margin-bottom: 1rem;
-    }
-    
-    .project-card .card-actions {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 1rem;
-    }
-}
 
 .pagination-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Hide any potential overflow */
+    overflow: hidden;
+    /* Hide any potential overflow */
 }
 
 
@@ -74,8 +59,10 @@
 
 /* Hide scrollbar for Firefox */
 .pagination-container {
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 /* Adjust alignment for pagination arrows */
@@ -86,5 +73,22 @@
 }
 
 .MuiTablePagination-root .MuiTablePagination-spacer {
-    display: none; /* Remove extra space */
+    display: none;
+    /* Remove extra space */
+}
+
+@media (max-width: 480px) {
+    .project-card {
+        margin-bottom: 1rem;
+    }
+
+    .list-container .card {
+        width: auto;
+    }
+
+    .project-card .card-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
 }

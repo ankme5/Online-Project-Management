@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 import '../css/Dashboard.css';
 import '../css/Common.css';
 import SideBar from './SideBar'
+import { useAuth } from './AuthContext';
 
 const Dashboard: React.FC = () => {
     const [totalProjects, setTotalProjects] = useState(0);
@@ -19,6 +20,14 @@ const Dashboard: React.FC = () => {
     const chartInstance = useRef<Chart | null>(null);
 
     const accessToken = "Bearer " + localStorage.getItem('authToken');
+
+    //signout 
+
+    const { logout } = useAuth();
+
+    const handleSignout = () => {
+        logout();
+    }
 
     useEffect(() => {
         const fetchAllData = async () => {
@@ -152,22 +161,25 @@ const Dashboard: React.FC = () => {
     return (
         <>
             <div className="d-flex">
-                <div className="col-auto">
+                <div className="col-auto sidebar-container">
                     <SideBar />
                 </div>
-                <div className="main flex-grow-1">
-                    <div className="brand d-flex justify-content-between align-items-center">
+                <div className="main">
+                    <div className="brand">
                         <div className="col-sm-4 title-div">
                             <span className="page-title">Dashboard</span>
                         </div>
-                        <div className="col-sm-4 logo-div d-none d-lg-block">
+                        <div className="col-sm-4 logo-div">
                             <img src="src/assets/Logo.svg" alt="Logo" />
                         </div>
-                        <div className="col-sm-4 d-none d-lg-flex justify-content-end">
+                        <div className="col-sm-4 brand-logout">
+                            <a href="" onClick={handleSignout}>
+                                <span className="me-2 fs-6"> <img src="src\assets\Logout.svg" /></span>
+                            </a>
                         </div>
                     </div>
                     <div className="container">
-                        <div className="summary d-flex justify-content-between flex-wrap">
+                        <div className="summary">
                             <div>
                                 <p className="summary-text">Total Projects</p>
                                 <p className="summary-number">{totalProjects}</p>
@@ -189,7 +201,7 @@ const Dashboard: React.FC = () => {
                                 <p className="summary-number">{cancelledProjects}</p>
                             </div>
                         </div>
-                        <div className="chart-container mt-4">
+                        <div className="chart-container mt-2">
                             <p className="chart-title">Department Wise Total Vs Closed</p>
                             <canvas ref={chartRef} />
                         </div>

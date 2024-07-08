@@ -1,9 +1,3 @@
-.form-container {
-    max-width: 100%;
-    padding: 10px;
-    line-height: 3rem;
-}
-
 .card {
     border-radius: 8px;
 }
@@ -12,7 +6,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.status{
+.status {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
@@ -39,25 +33,26 @@
 }
 
 .col-md-6 .form-group {
-    flex: 0 0 33.33%; /* Each form-group will take one-third of the column */
+    flex: 0 0 33.33%;
+    /* Each form-group will take one-third of the column */
     max-width: 33.33%;
 }
 
 @media (max-width: 768px) {
     .col-md-6 .form-group {
-        flex: 0 0 50%; /* Adjust to 50% for smaller screens */
+        flex: 0 0 50%;
         max-width: 50%;
     }
 }
 
 @media (max-width: 480px) {
     .col-md-6 .form-group {
-        flex: 0 0 100%; /* Full width on extra small screens */
+        flex: 0 0 100%;
         max-width: 100%;
     }
 
     .form-container {
-        padding: 10px; /* Adjust padding for small screens */
+        padding: 10px;
     }
 }
 

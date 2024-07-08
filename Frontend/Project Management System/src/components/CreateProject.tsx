@@ -3,8 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/CreateProject.css';
 import '../css/Common.css';
 import SideBar from './SideBar';
+import { useAuth } from './AuthContext';
 
 const CreateProject: React.FC = () => {
+
+
+    //signout 
+
+    const { logout } = useAuth();
+
+    const handleSignout = () => {
+        logout();
+    }
+
     const currentDate = new Date().toISOString().split('T')[0];
     const [projectData, setProjectData] = useState({
         project_name: '',
@@ -57,26 +68,28 @@ const CreateProject: React.FC = () => {
     };
 
     return (
-    
-<div className="d-flex">
-            <div className="col-auto">
+
+        <div className="d-flex">
+            <div className="col-auto sidebar-container">
                 <SideBar />
             </div>
-            <div className="main flex-grow-1">
-            <div className="brand d-flex justify-content-between align-items-center">
+            <div className="main">
+                <div className="brand">
                     <div className="col-sm-4 title-div">
                         <span className="page-title">Create Project</span>
                     </div>
                     <div className="col-sm-4 logo-div">
                         <img src="src/assets/Logo.svg" alt="Logo" />
                     </div>
-                    <div className="col-sm-4">
-
+                    <div className="col-sm-4 brand-logout">
+                        <a href="" onClick={handleSignout}>
+                            <span className="me-2 fs-6"> <img src="src\assets\Logout.svg" /></span>
+                        </a>
                     </div>
                 </div>
-                <div className="form-container">
+                <div className="container">
                     <div className='card shadow p-5'>
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} className=''>
                             <div className="status">
                                 <span>Status: </span>
                                 <span id="status">Registered</span>

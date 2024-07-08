@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/Common.css';
+import '../css/Display.css';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
     TablePagination, Button, Card, CardContent, Typography, useMediaQuery, TextField,
@@ -14,6 +15,9 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import '../css/Display.css'
 import SideBar from "./SideBar";
+import { LineController } from "chart.js";
+import { Link } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 interface Project {
     id: number;
@@ -26,6 +30,8 @@ interface Project {
     status: string;
     priority: string;
     department: string;
+    start_date: Date;
+    end_date: Date;
 }
 
 const Display: React.FC = () => {
@@ -58,6 +64,8 @@ const Display: React.FC = () => {
                 console.log("getting error while fetching all data " + error);
             }
         };
+
+
 
         fetchData();
     }, []);
@@ -122,54 +130,78 @@ const Display: React.FC = () => {
 
     // actions buttons
 
-    const  updateStatus = async (id:number,status:string) => {
+    const updateStatus = async (id: number, status: string) => {
 
-        try{
-                const response = await fetch("http://localhost:8080/home/update-status/"+id+"/"+status,{
+        try {
+            const response = await fetch("http://localhost:8080/home/update-status/" + id + "/" + status, {
 
-                    method:'PUT',
-                    headers:{
-                        'Content-Type': 'application/json',
-                        'Authorization': accessToken
-                    }
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': accessToken
                 }
-                );
+            }
+            );
 
-                if (response.ok) {
-                    setProjects(prevProjects => prevProjects.map(project =>
-                        project.id === id ? { ...project, status } : project
-                    ));
-                    console.log('Status updated successfully');
-                } else {
-                    console.error('Failed to update status');
-                }
+            if (response.ok) {
+                setProjects(prevProjects => prevProjects.map(project =>
+                    project.id === id ? { ...project, status } : project
+                ));
+                console.log('Status updated successfully');
+            } else {
+                console.error('Failed to update status');
+            }
 
-        }catch(error){
+        } catch (error) {
             console.log(error);
         }
 
     }
 
+    //date formating
+
+    const formatDate = (input_date: Date) => {
+        const date = new Date(input_date);
+        const formattedDate = date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: '2-digit' });
+
+        // Convert 'Month DD, YYYY' to 'Month-DD,YYYY'
+        const [monthDay, year] = formattedDate.split(', ');
+        const [month, day] = monthDay.split(' ');
+
+        return `${month}-${day},${year}`;
+    };
+
+
+    //signout 
+
+    const { logout } = useAuth();
+
+    const handleSignout = () => {
+        logout();
+    }
+
     return (
         <div className="d-flex">
-            <div className="col-auto">
+            <div className="col-auto sidebar-container">
                 <SideBar />
             </div>
-            <div className="main flex-grow-1">
-                <div className="brand d-flex justify-content-between align-items-center">
+            <div className="main">
+                <div className="brand">
                     <div className="col-sm-4 title-div">
                         <span className="page-title">Project Listing</span>
                     </div>
                     <div className="col-sm-4 logo-div">
                         <img src="src/assets/Logo.svg" alt="Logo" />
                     </div>
-                    <div className="col-sm-4">
-
+                    <div className="col-sm-4 brand-logout">
+                        <a href="" onClick={handleSignout}>
+                            <span className="me-2 fs-6"> <img src="src\assets\Logout.svg" /></span>
+                        </a>
                     </div>
                 </div>
-                <div className="list-container">
-                    <div className="card shadow p-4">
-                        <div className="search-filter-section d-flex justify-content-between align-items-center">
+                <div className="container">
+                    <div className="card shadow p-3">
+                        <div className="search-filter-section">
                             <TextField
                                 variant="standard"
                                 className="search-input"
@@ -234,9 +266,9 @@ const Display: React.FC = () => {
                                                     <TableCell>{project.location}</TableCell>
                                                     <TableCell>{project.status}</TableCell>
                                                     <TableCell>
-                                                        <Button variant="contained"  color="success" onClick={() => updateStatus(project.id,"Running")} className="m-1" size="small" >Start</Button>
-                                                        <Button variant="contained"  color="info" onClick={() => updateStatus(project.id,"Closed")} className="m-1" size="small">Close</Button>
-                                                        <Button variant="contained" color="inherit" onClick={() => updateStatus(project.id,"Cancelled")} className="m-1" size="small">Cancel</Button>
+                                                        <Button variant="contained" color="success" onClick={() => updateStatus(project.id, "Running")} className="m-1" size="small" >Start</Button>
+                                                        <Button variant="contained" color="info" onClick={() => updateStatus(project.id, "Closed")} className="m-1" size="small">Close</Button>
+                                                        <Button variant="contained" color="inherit" onClick={() => updateStatus(project.id, "Cancelled")} className="m-1" size="small">Cancel</Button>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -247,7 +279,9 @@ const Display: React.FC = () => {
                                 displayedProjects.map((project) => (
                                     <Card key={project.id} className="project-card">
                                         <CardContent>
+
                                             <Typography variant="h6">{project.project_name}</Typography>
+                                            <Typography variant="body2"><>{formatDate(project.start_date)} to {formatDate(project.end_date)}</></Typography>
                                             <Typography variant="body2"><strong>Reason:</strong> {project.reason}</Typography>
                                             <Typography variant="body2"><strong>Type:</strong> {project.type}</Typography>
                                             <Typography variant="body2"><strong>Division:</strong> {project.division}</Typography>
@@ -257,9 +291,9 @@ const Display: React.FC = () => {
                                             <Typography variant="body2"><strong>Location:</strong> {project.location}</Typography>
                                             <Typography variant="body2"><strong>Status:</strong> {project.status}</Typography>
                                             <div className="card-actions">
-                                                <Button variant="contained" id="start" color="primary" size="small" onClick={() => updateStatus(project.id,"Running")}>Start</Button>
-                                                <Button variant="contained" id="close" color="secondary" size="small" onClick={() => updateStatus(project.id,"Closed")}>Closed</Button>
-                                                <Button variant="contained" id="cancel" color="primary" size="small" onClick={() => updateStatus(project.id,"Cancelled")}>Cancel</Button>
+                                                <Button variant="contained" id="start" color="primary" size="small" onClick={() => updateStatus(project.id, "Running")}>Start</Button>
+                                                <Button variant="contained" id="close" color="secondary" size="small" onClick={() => updateStatus(project.id, "Closed")}>Closed</Button>
+                                                <Button variant="contained" id="cancel" color="primary" size="small" onClick={() => updateStatus(project.id, "Cancelled")}>Cancel</Button>
                                             </div>
                                         </CardContent>
                                     </Card>
