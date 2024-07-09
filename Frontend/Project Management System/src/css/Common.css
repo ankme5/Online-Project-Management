@@ -13,7 +13,7 @@
     justify-content: space-between;
     padding: 30px 30px;
     width: 100%;
-
+    
 }
 
 .brand img {
@@ -57,24 +57,27 @@
 body {
     font-family: "Roboto Slab";
     box-sizing: border-box;
+    background-color: whitesmoke;
 }
 
 .container {
     max-width: 100%;
-
+    /* background-color:whitesmoke; */
     /* display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column; */
-    padding-top: 10px;
+    padding: 0px 10px 10px 10px ;
     margin-bottom: 30px;
-
+    border-radius: 10px;
+    
+    
 }
 
 @media screen and (max-width:480px) {
 
     .main {
-        max-height: calc(100vh - 60px);
+        max-height: calc(100vh - 30px);
         display: flex;
         flex-direction: column;
     }
@@ -95,7 +98,7 @@ body {
     }
 
     .container {
-        padding-top: 30px;
+       
         overflow-y: auto;
     }
 

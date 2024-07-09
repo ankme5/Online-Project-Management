@@ -109,6 +109,10 @@ const Display: React.FC = () => {
                 return a.location.localeCompare(b.location);
             case "Department":
                 return a.department.localeCompare(b.department);
+            case "StartDate":
+                return a.start_date.toString().localeCompare(b.start_date.toString());
+            case "EndDate":
+                return a.end_date.toString().localeCompare(b.end_date.toString());
             default:
                 return 0;
         }
@@ -202,9 +206,7 @@ const Display: React.FC = () => {
                 <div className="container">
                     <div className="card shadow p-3">
                         <div className="search-filter-section">
-                            <TextField
-                                variant="standard"
-                                className="search-input"
+                            <TextField variant="standard" className="search-input"
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -231,6 +233,8 @@ const Display: React.FC = () => {
                                     <MenuItem value="Priority">Priority</MenuItem>
                                     <MenuItem value="Department">Department</MenuItem>
                                     <MenuItem value="Location">Location</MenuItem>
+                                    <MenuItem value="StartDate">Start Date</MenuItem>
+                                    <MenuItem value="EndDate">End Date</MenuItem>
                                     <MenuItem value="Status">Status</MenuItem>
                                 </Select>
                             </FormControl>
@@ -249,6 +253,8 @@ const Display: React.FC = () => {
                                                 <TableCell sx={{ color: '#333' }}>Priority</TableCell>
                                                 <TableCell sx={{ color: '#333' }}>Department</TableCell>
                                                 <TableCell sx={{ color: '#333' }}>Location</TableCell>
+                                                <TableCell sx={{ color: '#333' }}>Start Date</TableCell>
+                                                <TableCell sx={{ color: '#333' }}>End Date</TableCell>
                                                 <TableCell sx={{ color: '#333' }}>Status</TableCell>
                                                 <TableCell sx={{ color: '#333' }}>Actions</TableCell>
                                             </TableRow>
@@ -264,6 +270,8 @@ const Display: React.FC = () => {
                                                     <TableCell>{project.priority}</TableCell>
                                                     <TableCell>{project.department}</TableCell>
                                                     <TableCell>{project.location}</TableCell>
+                                                    <TableCell>{project.start_date.toString()}</TableCell>
+                                                    <TableCell>{project.end_date.toString()}</TableCell>
                                                     <TableCell>{project.status}</TableCell>
                                                     <TableCell>
                                                         <Button variant="contained" color="success" onClick={() => updateStatus(project.id, "Running")} className="m-1" size="small" >Start</Button>
@@ -278,25 +286,26 @@ const Display: React.FC = () => {
                             ) : (
                                 displayedProjects.map((project) => (
                                     <Card key={project.id} className="project-card">
-                                        <CardContent>
-
-                                            <Typography variant="h6">{project.project_name}</Typography>
-                                            <Typography variant="body2"><>{formatDate(project.start_date)} to {formatDate(project.end_date)}</></Typography>
-                                            <Typography variant="body2"><strong>Reason:</strong> {project.reason}</Typography>
-                                            <Typography variant="body2"><strong>Type:</strong> {project.type}</Typography>
-                                            <Typography variant="body2"><strong>Division:</strong> {project.division}</Typography>
-                                            <Typography variant="body2"><strong>Category:</strong> {project.category}</Typography>
-                                            <Typography variant="body2"><strong>Priority:</strong> {project.priority}</Typography>
-                                            <Typography variant="body2"><strong>Department:</strong> {project.department}</Typography>
-                                            <Typography variant="body2"><strong>Location:</strong> {project.location}</Typography>
-                                            <Typography variant="body2"><strong>Status:</strong> {project.status}</Typography>
-                                            <div className="card-actions">
-                                                <Button variant="contained" id="start" color="primary" size="small" onClick={() => updateStatus(project.id, "Running")}>Start</Button>
-                                                <Button variant="contained" id="close" color="secondary" size="small" onClick={() => updateStatus(project.id, "Closed")}>Closed</Button>
-                                                <Button variant="contained" id="cancel" color="primary" size="small" onClick={() => updateStatus(project.id, "Cancelled")}>Cancel</Button>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
+                                    <CardContent>
+                                        
+                                        <Typography variant="h6" className="project-title">{project.project_name}</Typography>
+                                        <Typography variant="body2" className="project-dates">{formatDate(project.start_date)} to {formatDate(project.end_date)}</Typography>
+                                        <Typography variant="body2" className="project-status"><strong>Status:</strong> {project.status}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Reason:</strong> {project.reason}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Type:</strong> {project.type}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Division:</strong> {project.division}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Category:</strong> {project.category}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Priority:</strong> {project.priority}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Department:</strong> {project.department}</Typography>
+                                        <Typography variant="body2" className="project-detail"><strong>Location:</strong> {project.location}</Typography>
+                                    
+                                        <div className="card-actions">
+                                            <Button variant="contained" id="start" color="primary" size="small" onClick={() => updateStatus(project.id, "Running")}>Start</Button>
+                                            <Button variant="contained" id="close" color="secondary" size="small" onClick={() => updateStatus(project.id, "Closed")}>Closed</Button>
+                                            <Button variant="contained" id="cancel" color="primary" size="small" onClick={() => updateStatus(project.id, "Cancelled")}>Cancel</Button>
+                                        </div>
+                                    </CardContent>
+                                </Card>
                                 ))
                             )}
                             <div >

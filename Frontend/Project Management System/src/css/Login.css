@@ -1,56 +1,25 @@
-@font-face {
-	font-family: 'mouse-300';
-	src: url("../fonts/RobotoSlab-Regular.ttf") format("truetype");
-  }
-  
-  @font-face {
-	font-family: 'mouse-500';
-	src: url("../fonts/RobotoSlab-Bold.ttf") format("truetype");
-  }
-  
   .login-main {
 	background: url('../assets/login-bg-1.svg') no-repeat fixed;
 	background-size: contain;
   }
   
-  * {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-  }
-  
-  a {
+  .forget-p a {
 	text-decoration: none;
 	outline: none;
-	color: #00ab9f;
+	color: #013bf8;
   }
   
-  a:hover {
-	color: #2448be;
+  .forget-p :hover {
+	color: #0083ab;
   }
   
-  ul {
-	margin-bottom: 0;
-	padding-left: 0;
-  }
   
   a:hover, a:focus, input, textarea {
 	text-decoration: none;
 	outline: none;
   }
   
-  .left {
-	text-align: left;
-  }
-  
-  .right {
-	text-align: right;
-  }
-  
-  .cp {
-	cursor: pointer;
-  }
-  
+
   html, body {
 	height: 100%;
 	font-family: "Roboto Slab"
@@ -61,135 +30,21 @@
 	width: 100%;
   }
   
-  .no-padding {
-	padding: 0;
-  }
-  
-  .no-margin {
-	margin: 0;
-  }
-  
-  .hid {
-	display: none;
-  }
-  
-  .top-mar {
-	margin-top: 15px;
-  }
-  
-  .h-100 {
-	height: 100%;
-  }
-  
-  ::placeholder {
-	color: #747f8a !important;
-	font-size: 13px;
-	opacity: .5 !important;
-  }
   
   .container-fluid {
 	padding: 0;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-	font-family: "mouse-500", Arial, Helvetica, sans-serif;
-  }
-  
-  strong {
-	font-family: "mouse-500", Arial, Helvetica, sans-serif;
-  }
-  
-  body {
-	background-color: #f7f7ff !important;
-	font-family: "mouse-300", Arial, Helvetica, sans-serif;
-	color: #6A6A6A;
-  }
-  
-  .btn-success {
-	background-color: #00ab9f;
-	border-color: #00ab9f;
-  }
-  
-  .btn-success:hover {
-	background-color: #00ab9f !important;
-	border-color: #00ab9f !important;
-  }
-  
-  .btn-success:active {
-	background-color: #00ab9f !important;
-	border-color: #00ab9f !important;
-  }
-  
-  .btn-success:focus {
-	background-color: #00ab9f !important;
-	border-color: #00ab9f !important;
-	box-shadow: none !important;
-  }
-  
-  .btn-info {
-	background-color: #4f6dcd;
-	border-color: #4f6dcd;
-  }
-  
-  .btn-info:hover {
-	background-color: #4f6dcd !important;
-	border-color: #4f6dcd !important;
-  }
-  
-  .btn-info:active {
-	background-color: #4f6dcd !important;
-	border-color: #4f6dcd !important;
-  }
-  
-  .btn-info:focus {
-	background-color: #4f6dcd !important;
-	border-color: #4f6dcd !important;
-	box-shadow: none !important;
-  }
-  
-  .btn {
-	box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-	border-radius: 2px;
-  }
-  
+   
   .form-control:focus {
 	box-shadow: none !important;
-	border: 2px solid #00a8df;
+	border: 2px solid #009fd4;
   }
+
   
-  .btn-light {
-	background-color: #FFF;
-	color: #3F3F3F;
-  }
-  
-  .collapse.show {
-	display: block !important;
-  }
-  
-  .form-control:focus {
-	box-shadow: none;
-	border: 2px solid #dc3545 !important;
-  }
-  
-  .form-control {
+  .log-det .text-box-cont .input-group .form-control {
 	background-color: #F8F8F8;
 	margin-bottom: 10px;
-  }
-  
-  .form-control:focus {
-	background-color: #FFF;
-	border-color: #CCC;
-  }
-  
-  .container {
-	max-width: 1200px;
-  }
-  
-  /* ===================================== Header CSS ================================== */
-  @media screen and (max-width: 991px) {
-	.cdvfdfd {
-	  padding: 15px;
-	}
   }
   
   .login-box {
@@ -211,6 +66,7 @@
 	  width: 90%;
 	  padding: 10px;
 	}
+  
   }
   
   @media screen and (max-width: 1096px) {
@@ -314,118 +170,7 @@
 	text-align: right;
   }
   
-  .log-det .forget-p span {
-	color: #0654db;
-	font-weight: 600;
-	margin-left: 5px;
-  }
-  
-  .box-de {
-	background-image: url(src/assets/LoginPageImg.jpg);
-	background-size: 100%;
-	padding: 0px;
-	border-top-right-radius: 25px;
-	border-bottom-right-radius: 25px;
-  }
-  
-  .box-de .inn-cover {
-	display: flex;
-	background-color: rgba(200, 35, 51, 0.7);
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	border-top-right-radius: 25px;
-	border-bottom-right-radius: 25px;
-	padding: 30px;
-  }
-  
-  @media screen and (max-width: 767px) {
-	.box-de .inn-cover {
-	  border-top-right-radius: 0px;
-	  border-bottom-left-radius: 25px;
-	  position: relative;
-	}
-  }
-  
-  @media screen and (max-width: 767px) {
-	.box-de {
-	  border-bottom-left-radius: 25px;
-	}
-  }
-  
-  .box-de .ditk-inf {
-	margin: auto;
-	align-items: center;
-	text-align: center;
-	color: #FFF;
-  }
-  
-  .box-de .ditk-inf .small-logo {
-	position: relative;
-	top: 0px;
-	margin-bottom: 20px;
-	font-size: 1.3rem;
-  }
-  
-  .box-de .ditk-inf .small-logo i {
-	font-size: 44px;
-  }
-  
-  .box-de .ditk-inf p {
-	margin-top: 15px;
-	font-size: .9rem;
-  }
-  
-  .box-de .ditk-inf .btn-outline-light {
-	border-radius: 50px;
-	box-shadow: none;
-	padding: 5px 20px;
-	margin-top: 25px;
-  }
-  
-  .box-de .small-logo {
-	position: absolute;
-	top: 20px;
-	left: 20px;
-	color: #FFF;
-  }
-  
-  .box-de .small-logo i {
-	font-size: 22px;
-	margin-right: 5px;
-  }
-  
-  .box-de .foter-credit {
-	position: absolute;
-	bottom: 10px;
-	right: 6%;
-	font-size: 14px;
-	padding: 10px;
-	color: #FFF;
-	font-weight: 300;
-  }
-  
-  .box-de .foter-credit a {
-	color: #FFF;
-  }
-  
-  @media screen and (max-width: 767px) {
-	.box-de .foter-credit {
-	  display: none;
-	}
-  }
-  
-  .sup {
-	margin-top: 40px;
-  }
-  
-  @media screen and (max-width: 767px) {
-	.sup-oi {
-	  margin-top: 40px !important;
-	}
-  }
-  
-  
+    
   /* Media query for screens up to 1200px */
 @media screen and (max-width: 1200px) {
   .login-box {
@@ -476,7 +221,7 @@
   }
 
   .login-header {
-    padding-top: 30px;
+    padding-top: 19px;
   }
 
   .login-header p {

@@ -8,13 +8,13 @@
 
 .summary div {
     flex: 1 1 calc(20% - 40px);
-    background-color: whitesmoke;
+    background-color: hsl(217, 100%, 97%);
     margin: 10px;
     border-radius: 10px;
     min-width: 150px;
     color: black;
     padding: 20px;
-    border-right: 6px solid rgb(31, 222, 159);
+    border-left: 7px solid rgb(31, 222, 219);
     text-align: center;
     transition: transform 0.3s;
 }
@@ -33,13 +33,12 @@
 
 .chart-container {
     margin: auto 0;
-    width: 100%;
     max-width: 700px;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
+    background-color: hsl(217, 100%, 97%);
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-right: auto;
+    margin-left:10px ;
+    padding: 10px;
 }
 
 .chart-container canvas {
@@ -52,13 +51,6 @@
     text-align: center;
     font-size: large;
     margin-bottom: 20px;
-}
-
-/* Media Queries for responsiveness */
-@media (max-width: 1200px) {
-    .summary div {
-        flex: 1 1 calc(33.33% - 40px);
-    }
 }
 
 @media (max-width: 768px) {
@@ -81,7 +73,7 @@
     }
 
     .summary div {
-        flex: 1 1 calc(100% - 40px);
+        flex: 1 1 calc(100% - 90%);
     }
 
     .summary-number {

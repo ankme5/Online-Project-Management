@@ -38,6 +38,10 @@
     max-width: 33.33%;
 }
 
+.form-box{
+    line-height: 4rem;;
+}
+
 @media (max-width: 768px) {
     .col-md-6 .form-group {
         flex: 0 0 50%;
@@ -54,6 +58,17 @@
     .form-container {
         padding: 10px;
     }
+
+    .form-row .form-group {
+        width: 100%;
+    }
+
+    .form-row .form-group input,
+    .form-row .form-group select,
+    .form-row .form-group label {
+        width: 100%;
+    }
+    
 }
 
 button[type="submit"] {
@@ -62,5 +77,4 @@ button[type="submit"] {
     margin-top: 20px;
     padding: 10px;
     font-size: 1.2rem;
-    background-color: #644af7;
 }

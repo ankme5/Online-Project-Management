@@ -67,6 +67,15 @@ const CreateProject: React.FC = () => {
         setProjectData({ ...projectData, [id]: value });
     };
 
+    const getTodaysDate = ():string=> {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months start at 0!
+        const dd = String(today.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+        
+    }
+
     return (
 
         <div className="d-flex">
@@ -88,8 +97,8 @@ const CreateProject: React.FC = () => {
                     </div>
                 </div>
                 <div className="container">
-                    <div className='card shadow p-5'>
-                        <form onSubmit={handleSubmit} className=''>
+                    <div className='card shadow p-4'>
+                        <form onSubmit={handleSubmit} className='form-box'>
                             <div className="status">
                                 <span>Status: </span>
                                 <span id="status">Registered</span>
@@ -251,7 +260,7 @@ const CreateProject: React.FC = () => {
                                     <input
                                         type="date"
                                         className="form-control"
-                                        id="end_date"
+                                        id="end_date" min={getTodaysDate()}
                                         value={projectData.end_date}
                                         onChange={handleInputChange}
                                         required

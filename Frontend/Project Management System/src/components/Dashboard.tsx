@@ -138,6 +138,14 @@ const Dashboard: React.FC = () => {
                                     beginAtZero: true,
                                     ticks: {
                                         stepSize: 2
+                                    },
+                                    grid:{
+                                        display:false
+                                    }
+                                },
+                                x:{
+                                    grid:{
+                                        display:false
                                     }
                                 }
                             }
