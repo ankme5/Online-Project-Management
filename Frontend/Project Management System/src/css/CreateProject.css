@@ -6,11 +6,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .status {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
-
 }
 
 .status span {
@@ -21,60 +21,75 @@
 .form-row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 
 .form-group {
-    padding: 0 10px;
+    flex: 1;
+    padding: 10px;
+    min-width: 100%;
 }
 
-.col-md-6 {
-    display: flex;
-    flex-wrap: wrap;
+.form-group .form-control{
+    height: 3rem;
 }
 
-.col-md-6 .form-group {
-    flex: 0 0 33.33%;
-    /* Each form-group will take one-third of the column */
-    max-width: 33.33%;
+/* button[type="submit"] {
+    padding: 9px;
+    font-size: 1rem;
+    border-radius: 2rem ;
+    width: 12rem;
+} */
+
+.form-box {
+    line-height: 2rem;
 }
 
-.form-box{
-    line-height: 4rem;;
+.form-box .bottom-btn{
+    padding: 9px;
+    font-size: 1rem;
+    border-radius: 2rem;
+    width: 12rem;
+    display: none;
 }
+
+.form-box .top-btn{
+    padding: 9px;
+    font-size: 1rem;
+    border-radius: 2rem;
+    width: 12rem;
+}
+
 
 @media (max-width: 768px) {
-    .col-md-6 .form-group {
-        flex: 0 0 50%;
-        max-width: 50%;
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 100%;
+        padding: 5px;
     }
 }
 
 @media (max-width: 480px) {
-    .col-md-6 .form-group {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
-    .form-container {
-        padding: 10px;
-    }
-
-    .form-row .form-group {
+    .form-group {
         width: 100%;
+        padding: 5px;
     }
 
-    .form-row .form-group input,
-    .form-row .form-group select,
-    .form-row .form-group label {
-        width: 100%;
-    }
-    
-}
+    .status {
 
-button[type="submit"] {
-    display: block;
-    width: 100%;
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 1.2rem;
+        justify-content: flex-start;
+    }
+
+    .form-box .top-btn{
+        display: none;
+    }
+
+    .form-box .bottom-btn{
+        display: flex;
+        justify-content: center;
+    }
 }

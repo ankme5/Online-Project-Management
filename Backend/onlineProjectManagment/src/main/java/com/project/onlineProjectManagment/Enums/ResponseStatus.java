@@ -1,4 +1,4 @@
-package com.project.onlineProjectManagment;
+package com.project.onlineProjectManagment.Enums;
 
 public enum ResponseStatus {
 

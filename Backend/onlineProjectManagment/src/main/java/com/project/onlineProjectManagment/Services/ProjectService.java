@@ -2,6 +2,7 @@ package com.project.onlineProjectManagment.Services;
 
 import com.project.onlineProjectManagment.Entity.ChartEntity;
 import com.project.onlineProjectManagment.Entity.Project;
+import com.project.onlineProjectManagment.Enums.Department;
 import com.project.onlineProjectManagment.repositories.ProjectRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,12 +45,13 @@ public class ProjectService {
         log.info("Department wise fetch");
         return projectRepo.fetchDeptWiseCount().stream().map(
                 result -> new ChartEntity(
-                        result[0].toString(),
+                        Department.getShortCodeByName(result[0].toString()),
                         ((Number) result[1]).longValue(),
                         ((Number) result[2]).longValue()
                 )
 
         ).collect(Collectors.toList());
+
     }
 
     public void updateStatusbyID(String status,int proj_id){

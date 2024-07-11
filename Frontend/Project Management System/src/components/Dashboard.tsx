@@ -4,6 +4,7 @@ import '../css/Dashboard.css';
 import '../css/Common.css';
 import SideBar from './SideBar'
 import { useAuth } from './AuthContext';
+import { Hidden, useMediaQuery } from '@mui/material';
 
 const Dashboard: React.FC = () => {
     const [totalProjects, setTotalProjects] = useState(0);
@@ -19,6 +20,8 @@ const Dashboard: React.FC = () => {
     const chartRef = useRef<HTMLCanvasElement | null>(null);
     const chartInstance = useRef<Chart | null>(null);
 
+    const isMobile = useMediaQuery('(max-width:600px)');
+    
     const accessToken = "Bearer " + localStorage.getItem('authToken');
 
     //signout 
@@ -115,23 +118,37 @@ const Dashboard: React.FC = () => {
                         data: {
                             labels: departments,
                             datasets: [
+
                                 {
                                     label: 'Total',
                                     data: totalCases,
-                                    backgroundColor: 'rgba(60, 179, 113, 1)',
+                                    backgroundColor: 'rgba(4,90,168,255)',
                                     borderColor: 'rgba(60, 179, 113, 1)',
-                                    borderWidth: 1
+                                    borderWidth: 1,
+                                    // barThickness:10,
+                                    borderRadius: 4,
+                                    categoryPercentage:0.6,
+                                    barPercentage:0.5
+                                
+
                                 },
                                 {
                                     label: 'Closed',
                                     data: closedCases,
-                                    backgroundColor: 'rgba(106, 90, 205, 1)',
-                                    borderColor: 'rgba(54, 162, 235, 1)',
-                                    borderWidth: 1
+                                    backgroundColor: 'rgb(108,180,92)',
+                                    borderColor: 'rgb(108,180,92,1)',
+                                    borderWidth: 1,
+                                    // barThickness:10,
+                                    borderRadius: 4,
+                                    categoryPercentage:0.6,
+                                    barPercentage:0.5
+
+
                                 }
                             ]
                         },
                         options: {
+
                             responsive: true,
                             scales: {
                                 y: {
@@ -139,13 +156,16 @@ const Dashboard: React.FC = () => {
                                     ticks: {
                                         stepSize: 2
                                     },
-                                    grid:{
-                                        display:false
+                                    grid: {
+                                        display: false
+
                                     }
+
                                 },
-                                x:{
-                                    grid:{
-                                        display:false
+                                x: {
+                                    grid: {
+                                        display: false,
+
                                     }
                                 }
                             }
@@ -166,6 +186,7 @@ const Dashboard: React.FC = () => {
         };
     }, [departments, totalCases, closedCases]); // Depend on variables needed for chart rendering
 
+    
     return (
         <>
             <div className="d-flex">
@@ -187,31 +208,33 @@ const Dashboard: React.FC = () => {
                         </div>
                     </div>
                     <div className="container">
-                        <div className="summary">
-                            <div>
-                                <p className="summary-text">Total Projects</p>
-                                <p className="summary-number">{totalProjects}</p>
+                        <div className='dashboard-container'>
+                            <div className="summary">
+                                <div>
+                                    <p className="summary-text">Total Projects</p>
+                                    <p className="summary-number">{totalProjects}</p>
+                                </div>
+                                <div>
+                                    <p className="summary-text">Closed</p>
+                                    <p className="summary-number">{closedProjects}</p>
+                                </div>
+                                <div>
+                                    <p className="summary-text">Running</p>
+                                    <p className="summary-number">{runningProjects}</p>
+                                </div>
+                                <div>
+                                    <p className="summary-text">Closure Delay</p>
+                                    <p className="summary-number">{closureDelayProjects}</p>
+                                </div>
+                                <div>
+                                    <p className="summary-text">Cancelled</p>
+                                    <p className="summary-number">{cancelledProjects}</p>
+                                </div>
                             </div>
-                            <div>
-                                <p className="summary-text">Closed</p>
-                                <p className="summary-number">{closedProjects}</p>
-                            </div>
-                            <div>
-                                <p className="summary-text">Running</p>
-                                <p className="summary-number">{runningProjects}</p>
-                            </div>
-                            <div>
-                                <p className="summary-text">Closure Delay</p>
-                                <p className="summary-number">{closureDelayProjects}</p>
-                            </div>
-                            <div>
-                                <p className="summary-text">Cancelled</p>
-                                <p className="summary-number">{cancelledProjects}</p>
-                            </div>
-                        </div>
-                        <div className="chart-container mt-2">
                             <p className="chart-title">Department Wise Total Vs Closed</p>
-                            <canvas ref={chartRef} />
+                            <div className="chart-container mt-2">
+                                <canvas ref={chartRef} style={isMobile?{height:"300px",width:"100%"}:{}}/>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -144,6 +144,7 @@
   .log-det .text-box-cont .login-btn {
     margin-top: 20px;
     width: 100%;
+    text-align: center;
     
   }
   
@@ -197,10 +198,6 @@
 	text-align: right;
   }
   
- .login-container{
-
- }
-
 /* Media query for screens up to 480px */
 @media screen and (max-width: 480px) {
   .login-box {

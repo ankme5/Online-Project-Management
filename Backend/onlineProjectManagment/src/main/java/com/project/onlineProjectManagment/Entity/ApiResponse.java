@@ -1,14 +1,10 @@
 package com.project.onlineProjectManagment.Entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.project.onlineProjectManagment.ResponseStatus;
-import lombok.AllArgsConstructor;
+import com.project.onlineProjectManagment.Enums.ResponseStatus;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 
 @Getter
 @Setter

@@ -3,7 +3,7 @@ package com.project.onlineProjectManagment.Controllers;
 import com.project.onlineProjectManagment.Entity.ApiResponse;
 import com.project.onlineProjectManagment.Entity.ChartEntity;
 import com.project.onlineProjectManagment.Entity.Project;
-import com.project.onlineProjectManagment.ResponseStatus;
+import com.project.onlineProjectManagment.Enums.ResponseStatus;
 import com.project.onlineProjectManagment.Services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

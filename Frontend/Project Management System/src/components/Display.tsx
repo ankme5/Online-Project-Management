@@ -4,19 +4,18 @@ import '../css/Common.css';
 import '../css/Display.css';
 import {
     Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-    TablePagination, Button, Card, CardContent, Typography, useMediaQuery, TextField,
+    Button, Card, CardContent, Typography, useMediaQuery, TextField,
     InputAdornment,
     FormControl,
     InputLabel,
     Select,
     MenuItem,
-    SelectChangeEvent
+    SelectChangeEvent,
+    Stack,
+    Pagination
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import '../css/Display.css'
 import SideBar from "./SideBar";
-import { LineController } from "chart.js";
-import { Link } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
 interface Project {
@@ -36,7 +35,7 @@ interface Project {
 
 const Display: React.FC = () => {
     const [projects, setProjects] = useState<Project[]>([]);
-    const [page, setPage] = useState(0);
+    const [page, setPage] = useState(1);
     const rowsPerPage = 10;
     const isMobile = useMediaQuery('(max-width:600px)');
 
@@ -65,28 +64,25 @@ const Display: React.FC = () => {
             }
         };
 
-
-
         fetchData();
     }, []);
 
-    //pagination
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
+        console.log(`Page changed to: ${newPage}`);
     };
 
-    //filters
     const [searchTerm, setSearchTerm] = useState('');
-    const [sortCriteria, setSortCriteria] = useState('');
+    const [sortCriteria, setSortCriteria] = useState('Priority');
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchTerm(event.target.value);
-        setPage(0); // Reset to the first page after search
+        setPage(1);
     };
 
     const handleSortChange = (event: SelectChangeEvent<string>) => {
         setSortCriteria(event.target.value);
-        setPage(0); // Reset to the first page after sorting
+        setPage(1);
     };
 
     const sortedProjects = [...projects].sort((a, b) => {
@@ -130,22 +126,18 @@ const Display: React.FC = () => {
         project.status.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const displayedProjects = filteredProjects.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-
-    // actions buttons
+    const displayedProjects = filteredProjects.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+    console.log(`Displayed projects for page ${page}:`, displayedProjects);
 
     const updateStatus = async (id: number, status: string) => {
-
         try {
             const response = await fetch("http://localhost:8080/home/update-status/" + id + "/" + status, {
-
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': accessToken
                 }
-            }
-            );
+            });
 
             if (response.ok) {
                 setProjects(prevProjects => prevProjects.map(project =>
@@ -155,28 +147,20 @@ const Display: React.FC = () => {
             } else {
                 console.error('Failed to update status');
             }
-
         } catch (error) {
             console.log(error);
         }
-
     }
-
-    //date formating
 
     const formatDate = (input_date: Date) => {
         const date = new Date(input_date);
-        const formattedDate = date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: '2-digit' });
+        const formattedDate = date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
 
-        // Convert 'Month DD, YYYY' to 'Month-DD,YYYY'
         const [monthDay, year] = formattedDate.split(', ');
         const [month, day] = monthDay.split(' ');
 
-        return `${month}-${day},${year}`;
+        return `${month}-${day}, ${year}`;
     };
-
-
-    //signout 
 
     const { logout } = useAuth();
 
@@ -221,16 +205,13 @@ const Display: React.FC = () => {
                                 <InputLabel>Sort By</InputLabel>
                                 <Select
                                     value={sortCriteria}
-                                    onChange={handleSortChange}
-                                    label="Sort By"
-                                >
-                                    <MenuItem value=""><em>Select</em></MenuItem>
+                                    onChange={handleSortChange} >
+                                    <MenuItem value="Priority" selected>Priority</MenuItem>
                                     <MenuItem value="ProjectName">Project Name</MenuItem>
                                     <MenuItem value="Reason">Reason</MenuItem>
                                     <MenuItem value="Type">Type</MenuItem>
                                     <MenuItem value="Division">Division</MenuItem>
                                     <MenuItem value="Category">Category</MenuItem>
-                                    <MenuItem value="Priority">Priority</MenuItem>
                                     <MenuItem value="Department">Department</MenuItem>
                                     <MenuItem value="Location">Location</MenuItem>
                                     <MenuItem value="StartDate">Start Date</MenuItem>
@@ -241,28 +222,28 @@ const Display: React.FC = () => {
                         </div>
                         <div className="project-table-container">
                             {!isMobile ? (
-                                <TableContainer component={Paper} className="table-fixed-height">
+                                <TableContainer component={Paper} className="table-fixed-height custom-scrollbar">
                                     <Table>
                                         <TableHead sx={{ backgroundColor: '#f5f5f5' }}>
-                                            <TableRow>
-                                                <TableCell sx={{ color: '#333' }}>Project Name</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Reason</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Type</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Division</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Category</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Priority</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Department</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Location</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Start Date</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>End Date</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Status</TableCell>
-                                                <TableCell sx={{ color: '#333' }}>Actions</TableCell>
+                                            <TableRow className="table-row">
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Project Name</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Reason</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Type</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Division</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Category</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Priority</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Department</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Location</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Status</TableCell>
+                                                <TableCell sx={{ color: '#333', fontWeight: "bold" }}>Actions</TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
                                             {displayedProjects.map((project) => (
                                                 <TableRow key={project.id}>
-                                                    <TableCell>{project.project_name}</TableCell>
+                                                    <TableCell><span style={{ fontWeight: "bold" }}>{project.project_name}</span><br />
+                                                        {formatDate(project.start_date)} to {formatDate(project.end_date)}
+                                                    </TableCell>
                                                     <TableCell>{project.reason}</TableCell>
                                                     <TableCell>{project.type}</TableCell>
                                                     <TableCell>{project.division}</TableCell>
@@ -270,13 +251,11 @@ const Display: React.FC = () => {
                                                     <TableCell>{project.priority}</TableCell>
                                                     <TableCell>{project.department}</TableCell>
                                                     <TableCell>{project.location}</TableCell>
-                                                    <TableCell>{project.start_date.toString()}</TableCell>
-                                                    <TableCell>{project.end_date.toString()}</TableCell>
-                                                    <TableCell>{project.status}</TableCell>
+                                                    <TableCell sx={{ fontWeight: "bold" }}>{project.status}</TableCell>
                                                     <TableCell>
-                                                        <Button variant="contained" color="success" onClick={() => updateStatus(project.id, "Running")} className="m-1" size="small" >Start</Button>
-                                                        <Button variant="contained" color="info" onClick={() => updateStatus(project.id, "Closed")} className="m-1" size="small">Close</Button>
-                                                        <Button variant="contained" color="inherit" onClick={() => updateStatus(project.id, "Cancelled")} className="m-1" size="small">Cancel</Button>
+                                                        <Button variant="contained" color="primary"  onClick={() => updateStatus(project.id, "Running")} className="m-1 action-btn" size="small">Start</Button>
+                                                        <Button variant="outlined" color="info" onClick={() => updateStatus(project.id, "Closed")} className="m-1 action-btn" size="small">Close</Button>
+                                                        <Button variant="outlined" color="info" onClick={() => updateStatus(project.id, "Cancelled")} className="m-1 action-btn" size="small">Cancel</Button>
                                                     </TableCell>
                                                 </TableRow>
                                             ))}
@@ -286,39 +265,45 @@ const Display: React.FC = () => {
                             ) : (
                                 displayedProjects.map((project) => (
                                     <Card key={project.id} className="project-card">
-                                    <CardContent>
-                                        
-                                        <Typography variant="h6" className="project-title">{project.project_name}</Typography>
-                                        <Typography variant="body2" className="project-dates">{formatDate(project.start_date)} to {formatDate(project.end_date)}</Typography>
-                                        <Typography variant="body2" className="project-status"><strong>Status:</strong> {project.status}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Reason:</strong> {project.reason}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Type:</strong> {project.type}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Division:</strong> {project.division}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Category:</strong> {project.category}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Priority:</strong> {project.priority}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Department:</strong> {project.department}</Typography>
-                                        <Typography variant="body2" className="project-detail"><strong>Location:</strong> {project.location}</Typography>
-                                    
-                                        <div className="card-actions">
-                                            <Button variant="contained" id="start" color="primary" size="small" onClick={() => updateStatus(project.id, "Running")}>Start</Button>
-                                            <Button variant="contained" id="close" color="secondary" size="small" onClick={() => updateStatus(project.id, "Closed")}>Closed</Button>
-                                            <Button variant="contained" id="cancel" color="primary" size="small" onClick={() => updateStatus(project.id, "Cancelled")}>Cancel</Button>
-                                        </div>
-                                    </CardContent>
-                                </Card>
+                                        <CardContent>
+                                            <div className="mb-header">
+                                                <Typography variant="body2" className="project-title">{project.project_name}</Typography>
+                                                <div className="">
+                                                    <Typography variant="subtitle2" className="project-status"> {project.status}</Typography>
+                                                </div>
+                                            </div>
+                                            <Typography variant="body2" className="project-dates">{formatDate(project.start_date)} to {formatDate(project.end_date)}</Typography>
+                                            <br />
+                                            <Typography variant="body2" className="project-detail">Reason: {project.reason}</Typography>
+                                            <div className="mb-header">
+                                                <Typography variant="body2" className="project-detail">Type: {project.type}</Typography>
+                                                <Typography variant="body2" className="project-detail">Category: {project.category}</Typography>
+                                            </div>
+                                            <div className="mb-header">
+                                                <Typography variant="body2" className="project-detail">Div: {project.division}</Typography>
+                                                <Typography variant="body2" className="project-detail">Dept: {project.department}</Typography>
+                                            </div>
+
+                                            <Typography variant="body2" className="project-detail">Priority: {project.priority}</Typography>
+                                            <Typography variant="body2" className="project-detail">Location: {project.location}</Typography>
+                                            <div className="card-actions">
+                                                <Button variant="contained" id="start" color="primary" size="small" className="m-1 action-btn" onClick={() => updateStatus(project.id, "Running")}>Start</Button>
+                                                <Button variant="outlined" id="close" color="info" size="small" className="m-1 action-btn" onClick={() => updateStatus(project.id, "Closed")}>Closed</Button>
+                                                <Button variant="outlined" id="cancel" color="info" size="small" className="m-1 action-btn" onClick={() => updateStatus(project.id, "Cancelled")}>Cancel</Button>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
                                 ))
                             )}
-                            <div >
-                                <TablePagination
-                                    rowsPerPageOptions={[]}
-                                    component="div"
-                                    count={filteredProjects.length}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    onPageChange={handleChangePage}
-                                    labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count}`}
-                                    className="pagination-container"
-                                />
+                            <div className="pagination-container">
+                                <Stack spacing={2}>
+                                    <Pagination
+                                        count={Math.ceil(filteredProjects.length / rowsPerPage)}
+                                        page={page}
+                                        onChange={handleChangePage}
+                                        color="primary"
+                                    />
+                                </Stack>
                             </div>
                         </div>
                     </div>

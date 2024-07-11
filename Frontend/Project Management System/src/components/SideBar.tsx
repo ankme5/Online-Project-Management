@@ -53,14 +53,15 @@ function SideBar() {
                                 <span className="menu-logo" > <img src={dashboardImg}  /></span>
                             </Link>
                         </li>
-                        <li className={"nav-item m-2 ${location.pathname === '/add' ? 'active' : ''}"}>
-                            <Link to="/add"  >
-                                <span className="menu-logo"> <img src={createProjectImage} /></span>
-                            </Link>
-                        </li>
                         <li className={"nav-item m-2 ${location.pathname === '/list' ? 'active' : ''}"}>
                             <Link to="/list"  >
                                 <span className="menu-logo"> <img src={projectListImage}  /></span>
+                            </Link>
+                        </li>
+                        <hr style={{"width":"2rem"}} />
+                        <li className={"nav-item m-2 ${location.pathname === '/add' ? 'active' : ''}"}>
+                            <Link to="/add"  >
+                                <span className="menu-logo"> <img src={createProjectImage} /></span>
                             </Link>
                         </li>
                     </ul>
