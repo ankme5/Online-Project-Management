@@ -56,7 +56,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/home/**").authenticated()
-                        .requestMatchers("/auth/v1/login").permitAll())
+                        .requestMatchers("/auth/v1/login").permitAll().requestMatchers("/actuator/**").permitAll())
                 .exceptionHandling(e -> e.authenticationEntryPoint(point))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
