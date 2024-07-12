@@ -5,6 +5,7 @@ import '../css/Common.css';
 import SideBar from './SideBar'
 import { useAuth } from './AuthContext';
 import { Hidden, useMediaQuery } from '@mui/material';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 const Dashboard: React.FC = () => {
     const [totalProjects, setTotalProjects] = useState(0);
@@ -21,10 +22,12 @@ const Dashboard: React.FC = () => {
     const chartInstance = useRef<Chart | null>(null);
 
     const isMobile = useMediaQuery('(max-width:600px)');
-    
+
     const accessToken = "Bearer " + localStorage.getItem('authToken');
 
     //signout 
+
+    Chart.register(ChartDataLabels);
 
     const { logout } = useAuth();
 
@@ -127,9 +130,9 @@ const Dashboard: React.FC = () => {
                                     borderWidth: 1,
                                     // barThickness:10,
                                     borderRadius: 4,
-                                    categoryPercentage:0.6,
-                                    barPercentage:0.5
-                                
+                                    categoryPercentage: 0.6,
+                                    barPercentage: 0.5
+
 
                                 },
                                 {
@@ -140,14 +143,28 @@ const Dashboard: React.FC = () => {
                                     borderWidth: 1,
                                     // barThickness:10,
                                     borderRadius: 4,
-                                    categoryPercentage:0.6,
-                                    barPercentage:0.5
+                                    categoryPercentage: 0.6,
+                                    barPercentage: 0.5
 
 
                                 }
                             ]
                         },
                         options: {
+                            plugins: {
+                                datalabels: {
+                                    anchor: "end",
+                                    align: "top",
+                                    formatter: Math.round,
+                                    font: {
+                                        weight: "bold"
+                                    }
+
+                                },
+                                tooltip: {
+                                    mode:"index"
+                                }
+                            },
 
                             responsive: true,
                             scales: {
@@ -186,7 +203,7 @@ const Dashboard: React.FC = () => {
         };
     }, [departments, totalCases, closedCases]); // Depend on variables needed for chart rendering
 
-    
+
     return (
         <>
             <div className="d-flex">
@@ -233,7 +250,7 @@ const Dashboard: React.FC = () => {
                             </div>
                             <p className="chart-title">Department Wise Total Vs Closed</p>
                             <div className="chart-container mt-2">
-                                <canvas ref={chartRef} style={isMobile?{height:"300px",width:"100%"}:{}}/>
+                                <canvas ref={chartRef} style={isMobile ? { height: "300px", width: "100%" } : {}} />
                             </div>
                         </div>
                     </div>
