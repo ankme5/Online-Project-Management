@@ -13,6 +13,8 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  const [message,SetMessage]=useState('');
+
   const [usernameNullCheck, setUsernameNullCheck] = useState(false);
   const [passwordNullCheck, setPasswordNullCheck] = useState(false);
   const [validationCheck, setValidationCheck] = useState(false);
@@ -48,6 +50,7 @@ const Login: React.FC = () => {
       setPasswordNullCheck(false);
     }
 
+   
     if (username.trim() && password.trim()) {
       const credentials = {
         username,
@@ -65,6 +68,7 @@ const Login: React.FC = () => {
         if (response.ok) {
           login(data.token); // Call login to set token and state, and navigate to dashboard
         } else {
+          SetMessage(data.message);
           setValidationCheck(true);
           // alert('Login failed. Please check your credentials.');
           console.log('Unsuccessful:', data.message);
@@ -116,7 +120,7 @@ const Login: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
 
-                      />
+                      />  
                       <button
                           type="button"
                           className="password-toggle-btn"
@@ -136,12 +140,13 @@ const Login: React.FC = () => {
                       <button type="submit" className="btn btn-round btn-primary">
                         SIGN IN
                       </button>
-                      <p className={`${validationCheck ? 'show-warning' : 'warning'}`}>Invalid Credentials</p>
+                      <p className={`${validationCheck ? 'show-warning' : 'warning'}`}>{message}</p>
                     </div>
                     
                   </form>
                 </div>
               </div>
+              {/* <p className={`${validationCheck ? 'show-warning' : 'warning'}`}>Invalid Credentials</p> */}
             </div>
           </div>
         </div>

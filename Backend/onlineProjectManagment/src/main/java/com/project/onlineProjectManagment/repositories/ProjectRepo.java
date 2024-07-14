@@ -15,7 +15,7 @@ import java.util.List;
 public interface ProjectRepo extends JpaRepository<Project,Long> {
 
 
-    @Query(value = "SELECT p.status,count(p.status) FROM projects p group by p.status",nativeQuery = true)
+    @Query(value = "SELECT p.status,count(p.status) FROM projects p group by p.status union all select 'closure_delay',count(id) from projects where end_date < now() ;",nativeQuery = true)
     List<Object[]> fetchAllCount();
 
     @Query(value = "SELECT department,COUNT(id) AS total,SUM(CASE WHEN status = 'Closed' THEN 1 ELSE 0 END) AS closed FROM project_management.projects GROUP BY department", nativeQuery = true)

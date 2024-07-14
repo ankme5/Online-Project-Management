@@ -53,7 +53,7 @@ public class AuthController {
             return new ResponseEntity<>(apiResponse,HttpStatus.OK);
         }catch (Exception e){
             logger.info(e.getMessage());
-            apiResponse.setMessage("Invalid User "+ e.getMessage());
+            apiResponse.setMessage(e.getMessage());
             apiResponse.setStatus(ResponseStatus.FAILURE);
             return new ResponseEntity<>(apiResponse,HttpStatus.FORBIDDEN);
         }

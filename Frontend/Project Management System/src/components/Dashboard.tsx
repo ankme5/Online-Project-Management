@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
                 setTotalProjects(data.Total || 0);
                 setClosedProjects(data.Closed || 0);
                 setRunningProjects(data.Running || 0);
-                setClosureDelayProjects(data.Running || 0);
+                setClosureDelayProjects(data.closure_delay || 0);
                 setCancelledProjects(data.Cancelled || 0);
 
             } catch (error) {

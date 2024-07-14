@@ -8,9 +8,7 @@ const container = document.getElementById('root');
 const root = createRoot(container!); // Create root and assert non-null
 
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>
 );
