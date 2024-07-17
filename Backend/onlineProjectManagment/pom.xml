@@ -10,9 +10,11 @@
 	</parent>
 	<groupId>com.project</groupId>
 	<artifactId>onlineProjectManagment</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
 	<name>onlineProjectManagment</name>
-	<description>Demo project for Spring Boot</description>
+
+	<description>Online Project Management</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -93,11 +95,16 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<!-- MySQL -->
+<!--		&lt;!&ndash; MySQL &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>mysql</groupId>-->
+<!--			<artifactId>mysql-connector-java</artifactId>-->
+<!--			<version>8.0.29</version>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.29</version>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc10</artifactId>
+			<version>19.21.0.0</version>
 		</dependency>
 	</dependencies>
 

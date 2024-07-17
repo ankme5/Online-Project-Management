@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+
 @Service
 public class ProjectService {
 
@@ -20,6 +21,7 @@ public class ProjectService {
     private ProjectRepo projectRepo;
 
     public Project saveProject(Project project){
+        log.info("adding New Record");
         return projectRepo.save(project);
     }
 
@@ -34,7 +36,7 @@ public class ProjectService {
         log.info("fetching all counts");
         Map<String,Integer> statusCode= projectRepo.fetchAllCount().stream().collect(Collectors.toMap(
                 result -> result[0].toString(),
-                result -> ((Long) result[1]).intValue()
+                result -> ((Number) result[1]).intValue()
         ));
         statusCode.put("Total",statusCode.values().stream().mapToInt(Integer::intValue).sum());
         return statusCode;

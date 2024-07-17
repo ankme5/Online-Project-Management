@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name="users",schema = "project_management")
+@Table(name="users")
 public class AppUser {
 
     @Id

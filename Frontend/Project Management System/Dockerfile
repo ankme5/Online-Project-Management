@@ -7,5 +7,5 @@ COPY . .
 FROM node:21-alpine
 WORKDIR /app
 COPY --from=Frontend-Build /app .
-EXPOSE 5217
-CMD [ "npm","RUN","dev","--","--host" ]
+EXPOSE 5173
+CMD [ "npm","run","dev","--","--host" ]

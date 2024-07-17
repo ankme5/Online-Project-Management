@@ -1,0 +1,35 @@
+services:
+  backend:
+    build:
+      context: ./backend/onlineProjectManagment
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    container_name: "pms-backend"
+    depends_on:
+        - mysql
+    environment:
+        MYSQL_HOST: mysqldb
+
+  
+  frontend:
+    build:
+      context: ./frontend/Project Management System
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    container_name: "pms-frontend"
+    
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: project_management
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./Proj_management.sql:/docker-entrypoint-initdb.d/Proj_management.sql
+    container_name: "mysqldb"
+   
