@@ -1,4 +1,25 @@
 services:
+  oracle:
+    image: container-registry.oracle.com/database/free:23.4.0.0-lite
+    environment:
+      ORACLE_PDB: ORCLPDB
+      ORACLE_PWD: root
+      ORACLE_CHARACTERSET: AL32UTF8
+    ports:
+      - "1522:1521"
+    container_name: "oracledb"
+    volumes:
+      - ./GeneratedDB:/opt/oracle/oradata
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "echo 'select 1 from dual' | sqlplus -S PMS/root@localhost:1521/ORCLPDB"
+        ]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+
   backend:
     build:
       context: ./backend/onlineProjectManagment
@@ -7,11 +28,11 @@ services:
       - "8080:8080"
     container_name: "pms-backend"
     depends_on:
-        - mysql
+      oracle:
+        condition: service_healthy
     environment:
-        MYSQL_HOST: mysqldb
+      ORACLE_HOST: oracledb
 
-  
   frontend:
     build:
       context: ./frontend/Project Management System
@@ -19,17 +40,6 @@ services:
     ports:
       - "5173:5173"
     depends_on:
+      - oracle
       - backend
     container_name: "pms-frontend"
-    
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: project_management
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./Proj_management.sql:/docker-entrypoint-initdb.d/Proj_management.sql
-    container_name: "mysqldb"
-   
