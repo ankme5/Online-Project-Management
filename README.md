@@ -35,10 +35,10 @@ This project management system is built using a Spring Boot backend and a Vite +
 2. **Build and Run the Application**
    ```bash
    docker-compose up --build
-   
-3. **Access the Application**
-  Backend: http://localhost:8080
-  Frontend: http://localhost:3000
+
+## Access the Application ##
+  ### Backend: http://localhost:8080 ###
+  ### Frontend: http://localhost:3000 ###
   
  
    
