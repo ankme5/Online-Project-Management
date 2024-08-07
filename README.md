@@ -38,7 +38,7 @@ This project management system is built using a Spring Boot backend and a Vite +
 
 ## Access the Application ##
   ### Backend: http://localhost:8080 ###
-  ### Frontend: http://localhost:3000 ###
+  ### Frontend: http://localhost:5173 ###
   
  
    
