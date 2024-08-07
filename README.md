@@ -29,7 +29,7 @@ This project management system is built using a Spring Boot backend and a Vite +
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/project-management-system.git
+   git clone https://github.com/ankme5/Project-Management-System
    cd project-management-system
    
 2. **Build and Run the Application**
